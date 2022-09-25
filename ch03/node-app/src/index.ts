@@ -101,10 +101,15 @@ class HitAndBlow {
     this.mode = await promptSelect<Mode>("モードを入力してください", modes);
     const answerLength = this.getAnswerLength();
 
-    while (this.answer.length < answerLength) {
-      const randNum = Math.floor(Math.random() * this.answerSource.length);
-      const selectedItem = this.answerSource[randNum];
-      if (!this.answer.includes(selectedItem)) this.answer.push(selectedItem);
+    // while (this.answer.length < answerLength) {
+    //   const randNum = Math.floor(Math.random() * this.answerSource.length);
+    //   const selectedItem = this.answerSource[randNum];
+    //   if (!this.answer.includes(selectedItem)) this.answer.push(selectedItem);
+    // }
+
+    // for debug
+    for (let i = 1; i <= answerLength; i++) {
+      this.answer.push(this.answerSource[i]);
     }
   }
 
