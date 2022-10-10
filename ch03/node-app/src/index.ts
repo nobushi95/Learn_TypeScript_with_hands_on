@@ -35,10 +35,10 @@ const promptSelect = async <T extends string>(
 const nextActions = ["play again", "change game", "exit"] as const;
 type NextAction = typeof nextActions[number];
 
-abstract class Game {
-  abstract setting(): Promise<void>;
-  abstract play(): Promise<void>;
-  abstract end(): void;
+interface Game {
+  setting(): Promise<void>;
+  play(): Promise<void>;
+  end(): void;
 }
 
 const gameTitles = ["hit and blow", "janken"] as const;
