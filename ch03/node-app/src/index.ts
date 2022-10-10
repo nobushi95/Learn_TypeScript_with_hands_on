@@ -35,15 +35,21 @@ const promptSelect = async <T extends string>(
 const nextActions = ["play again", "change game", "exit"] as const;
 type NextAction = typeof nextActions[number];
 
+abstract class Game {
+  abstract setting(): Promise<void>;
+  abstract play(): Promise<void>;
+  abstract end(): void;
+}
+
 const gameTitles = ["hit and blow", "janken"] as const;
 type GameTitle = typeof gameTitles[number];
 type GameStore = {
-  [key in GameTitle]: HitAndBlow | Janken;
+  [key in GameTitle]: Game;
 };
 
 class GameProcedure {
   private currentGameTitle: GameTitle | "" = "";
-  private currentGame: HitAndBlow | Janken | null = null;
+  private currentGame: Game | null = null;
 
   constructor(private readonly gameStore: GameStore) {}
 
@@ -89,7 +95,7 @@ class GameProcedure {
 const modes = ["normal", "hard"] as const;
 type Mode = typeof modes[number];
 
-class HitAndBlow {
+class HitAndBlow implements Game {
   private readonly answerSource = [
     "0",
     "1",
@@ -199,7 +205,7 @@ class HitAndBlow {
 const jankenOption = ["rock", "paper", "scissors"] as const;
 type JankenOption = typeof jankenOption[number];
 
-class Janken {
+class Janken implements Game {
   private rounds = 0;
   private currentRound = 1;
   private result = {
