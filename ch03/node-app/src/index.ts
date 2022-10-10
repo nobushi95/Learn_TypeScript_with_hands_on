@@ -32,7 +32,7 @@ const promptSelect = async <T extends string>(
   }
 };
 
-const nextActions = ["play again", "exit"] as const;
+const nextActions = ["play again", "change game", "exit"] as const;
 type NextAction = typeof nextActions[number];
 
 const gameTitles = ["hit and blow", "janken"] as const;
@@ -69,6 +69,9 @@ class GameProcedure {
     this.currentGame.end();
     const action = await promptSelect("ゲームを続けますか？", nextActions);
     if (action == "play again") {
+      await this.play();
+    } else if (action == "change game") {
+      await this.select();
       await this.play();
     } else if (action == "exit") {
       this.end();
