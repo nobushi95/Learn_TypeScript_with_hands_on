@@ -1,18 +1,20 @@
-import { EventListener } from "./EventListener";
+import { EventListener } from './EventListener';
 
 class Application {
+  private readonly eventListner = new EventListener();
+
   start() {
-    const eventListener = new EventListener();
-    const button = document.getElementById("deleteAllDoneTask");
-    if (!button) return;
+    const createForm = document.getElementById('createForm') as HTMLElement;
+    this.eventListner.add('submit-handler', 'submit', createForm, this.handleSubmit);
+  }
 
-    eventListener.add("sample", "click", button, () => alert("clicked"));
-
-    eventListener.remove("sample");
+  private handleSubmit = (e: Event) => {
+    e.preventDefault();
+    console.log('submitted');
   }
 }
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   const app = new Application();
   app.start();
 });
