@@ -1,8 +1,10 @@
 import { EventListener } from './EventListener';
 import { Task } from './Task';
+import { TaskCollection } from './TaskCollection';
 
 class Application {
   private readonly eventListner = new EventListener();
+  private readonly taskCollection = new TaskCollection();
 
   start() {
     const createForm = document.getElementById('createForm') as HTMLElement;
@@ -18,7 +20,8 @@ class Application {
       return;
 
     const task = new Task({ tittle: titleInput.value });
-    console.log(task);
+    this.taskCollection.add(task);
+    console.log(this.taskCollection);
   }
 }
 
