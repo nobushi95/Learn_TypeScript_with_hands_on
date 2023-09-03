@@ -3,12 +3,21 @@ import { Task } from "./Task";
 export class TaskRenderer {
     constructor(private readonly todoList: HTMLElement) { }
 
-    append(task: Task) {
-        const taskEl = this.render(task);
+    append(task: Task): HTMLButtonElement {
+        const {taskEl, deleteButtonEl} = this.render(task);
         this.todoList.append(taskEl);
+        return deleteButtonEl;
     }
 
-    private render(task: Task): HTMLElement {
+    remove(task: Task) {
+        const taskEl = document.getElementById(task.id);
+        if (!taskEl)
+            return;
+
+        this.todoList.removeChild(taskEl);
+    }
+
+    private render(task: Task): {taskEl: HTMLSpanElement, deleteButtonEl: HTMLButtonElement} {
         // <div class="taskItem">
         //   <span>タイトル</span>
         //   <button>削除</button>
@@ -26,6 +35,6 @@ export class TaskRenderer {
 
         taskEl.append(spanEl, deleteButtonEl);
 
-        return taskEl;
+        return {taskEl, deleteButtonEl}
     }
 }
