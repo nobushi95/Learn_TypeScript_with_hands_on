@@ -17,4 +17,9 @@ export class Task {
     this.title = properties.tittle;
     this.status = statusMap.todo;
   }
+
+  update(properties: { title?: string; status?: Status }) {
+    this.title = properties.title || this.title;
+    this.status = properties.status || this.status;
+  }
 }
