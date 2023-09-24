@@ -13,10 +13,17 @@ class Application {
   );
 
   start() {
+    const taskItems = this.taskRenderer.renderAll(this.taskCollection);
     const createForm = document.getElementById("createForm") as HTMLElement;
     const deleteAddDoneTaskButton = document.getElementById(
       "deleteAllDoneTask"
     ) as HTMLElement;
+
+    taskItems.forEach(({ task, deleteButtonEl }) => {
+      this.eventListner.add(task.id, "click", deleteButtonEl, () =>
+        this.handleClickDeleteTask(task)
+      );
+    });
 
     this.eventListner.add(
       "submit-handler",
@@ -41,7 +48,7 @@ class Application {
 
     if (!titleInput.value) return;
 
-    const task = new Task({ tittle: titleInput.value });
+    const task = new Task({ title: titleInput.value });
     this.taskCollection.add(task);
 
     const deleteButtonEl = this.taskRenderer.append(task);
@@ -72,7 +79,17 @@ class Application {
     task.update({ status: newStatus });
     this.taskCollection.update(task);
 
-    console.log(sibling);
+    if (sibling) {
+      const nextTaskId = this.taskRenderer.getId(sibling);
+      if (!nextTaskId) return;
+
+      const nextTask = this.taskCollection.find(nextTaskId);
+      if (!nextTask) return;
+
+      this.taskCollection.moveAboveTarget(task, nextTask);
+    } else {
+      this.taskCollection.moveToLast(task);
+    }
   };
 
   private executeDeleteTask = (task: Task) => {
