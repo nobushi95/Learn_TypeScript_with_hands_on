@@ -4,7 +4,7 @@ import { TaskCollection } from "./TaskCollection";
 import { TaskRenderer } from "./TaskRenderer";
 
 class Application {
-  private readonly eventListner = new EventListener();
+  private readonly eventListener = new EventListener();
   private readonly taskCollection = new TaskCollection();
   private readonly taskRenderer = new TaskRenderer(
     document.getElementById("todoList") as HTMLElement,
@@ -15,12 +15,12 @@ class Application {
   start() {
     const taskItems = this.taskRenderer.renderAll(this.taskCollection);
     const createForm = document.getElementById("createForm") as HTMLElement;
-    const deleteAddDoneTaskButton = document.getElementById(
+    const deleteAllDoneTaskButton = document.getElementById(
       "deleteAllDoneTask"
     ) as HTMLElement;
 
     taskItems.forEach(({ task, deleteButtonEl }) => {
-      this.eventListner.add(
+      this.eventListener.add(
         "click",
         deleteButtonEl,
         () => this.handleClickDeleteTask(task),
@@ -28,10 +28,10 @@ class Application {
       );
     });
 
-    this.eventListner.add("submit", createForm, this.handleSubmit);
-    this.eventListner.add(
+    this.eventListener.add("submit", createForm, this.handleSubmit);
+    this.eventListener.add(
       "click",
-      deleteAddDoneTaskButton,
+      deleteAllDoneTaskButton,
       this.handleClickDeleteAllDoneTasks
     );
 
@@ -50,7 +50,7 @@ class Application {
 
     const deleteButtonEl = this.taskRenderer.append(task);
 
-    this.eventListner.add("click", deleteButtonEl, () =>
+    this.eventListener.add("click", deleteButtonEl, () =>
       this.handleClickDeleteTask(task)
     );
 
@@ -90,7 +90,7 @@ class Application {
   };
 
   private executeDeleteTask = (task: Task) => {
-    this.eventListner.remove(task.id);
+    this.eventListener.remove(task.id);
     this.taskCollection.delete(task);
     this.taskRenderer.remove(task);
   };
