@@ -20,19 +20,16 @@ class Application {
     ) as HTMLElement;
 
     taskItems.forEach(({ task, deleteButtonEl }) => {
-      this.eventListner.add(task.id, "click", deleteButtonEl, () =>
-        this.handleClickDeleteTask(task)
+      this.eventListner.add(
+        "click",
+        deleteButtonEl,
+        () => this.handleClickDeleteTask(task),
+        task.id
       );
     });
 
+    this.eventListner.add("submit", createForm, this.handleSubmit);
     this.eventListner.add(
-      "submit-handler",
-      "submit",
-      createForm,
-      this.handleSubmit
-    );
-    this.eventListner.add(
-      "click-handler",
       "click",
       deleteAddDoneTaskButton,
       this.handleClickDeleteAllDoneTasks
@@ -53,7 +50,7 @@ class Application {
 
     const deleteButtonEl = this.taskRenderer.append(task);
 
-    this.eventListner.add(task.id, "click", deleteButtonEl, () =>
+    this.eventListner.add("click", deleteButtonEl, () =>
       this.handleClickDeleteTask(task)
     );
 

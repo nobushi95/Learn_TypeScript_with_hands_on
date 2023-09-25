@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 type Listener = {
   [id: string]: {
     event: string;
@@ -10,10 +12,10 @@ export class EventListener {
   private readonly listeners: Listener = {};
 
   add(
-    listenerId: string,
     event: string,
     element: HTMLElement,
-    handler: (e: Event) => void
+    handler: (e: Event) => void,
+    listenerId = uuid()
   ) {
     this.listeners[listenerId] = {
       event,
