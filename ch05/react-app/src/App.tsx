@@ -1,6 +1,7 @@
 import { Button } from "./libs/Button";
 import { Heading } from "./libs/Heading";
 import { Input } from "./libs/Input";
+import { PasswordForm } from "./libs/PasswordForm";
 import { Text } from "./libs/Text";
 import { Textarea } from "./libs/Textarea";
 
@@ -31,6 +32,7 @@ export const App = () => {
       <Textarea width={200} maxLength={100} />
       <Input type="text" />
       <Input type="text" error />
+      <PasswordForm onSubmit={(password) => console.log(password)} />
     </>
   );
 };
