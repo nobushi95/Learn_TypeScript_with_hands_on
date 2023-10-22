@@ -1,5 +1,6 @@
 import { Button } from "./libs/Button";
 import { Heading } from "./libs/Heading";
+import { Input } from "./libs/Input";
 import { Text } from "./libs/Text";
 import { Textarea } from "./libs/Textarea";
 
@@ -28,6 +29,8 @@ export const App = () => {
         type="error"
       />
       <Textarea width={200} maxLength={100} />
+      <Input type="text" />
+      <Input type="text" error />
     </>
   );
 };
