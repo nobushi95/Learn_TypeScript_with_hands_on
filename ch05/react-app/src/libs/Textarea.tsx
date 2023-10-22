@@ -13,10 +13,8 @@ export const Textarea: VFC<Props> = ({ maxLength, width = 300 }) => {
     setCount(event.currentTarget.value.length);
   };
 
-  const isError = (): boolean => {
-    if (maxLength !== undefined && maxLength - count < 0) return true;
-    return false;
-  };
+  const isError = (): boolean =>
+    maxLength !== undefined && maxLength - count < 0;
 
   return (
     <>
