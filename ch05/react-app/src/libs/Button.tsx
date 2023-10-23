@@ -9,6 +9,7 @@ type Props = {
   onClick: () => void;
   type?: ButtonType;
   width?: number;
+  disabled?: boolean;
 };
 
 export const Button: VFC<Props> = ({
@@ -16,9 +17,15 @@ export const Button: VFC<Props> = ({
   onClick,
   width = 80,
   type = "primary",
+  disabled = false,
 }) => {
   return (
-    <Wrapper onClick={onClick} width={width} className={type}>
+    <Wrapper
+      onClick={onClick}
+      width={width}
+      className={type}
+      disabled={disabled}
+    >
       {title}
     </Wrapper>
   );
