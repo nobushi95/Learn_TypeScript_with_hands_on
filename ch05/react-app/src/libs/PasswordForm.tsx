@@ -19,7 +19,7 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Enter" && value.length >= PASSWORD_LENGTH) onSubmit(value);
+      if (e.key === "Enter" && isPasswordLengthEnough()) onSubmit(value);
     },
     [value]
   );
@@ -28,6 +28,8 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
+
+  const isPasswordLengthEnough = () => value.length >= PASSWORD_LENGTH;
 
   return (
     <Wrapper>
@@ -42,7 +44,7 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
         onClick={() => onSubmit(value)}
         title="実行"
         type="primary"
-        disabled={value.length < PASSWORD_LENGTH}
+        disabled={!isPasswordLengthEnough()}
       />
     </Wrapper>
   );
