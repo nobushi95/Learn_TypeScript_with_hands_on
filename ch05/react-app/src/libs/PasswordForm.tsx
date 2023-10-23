@@ -12,6 +12,7 @@ type Props = {
 
 export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
   const [value, setValue] = useState("");
+  const [isFocusOnButton, setIsFocusOnButton] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.currentTarget.value);
@@ -19,9 +20,10 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isPasswordLengthEnough()) onSubmit(value);
+      if (e.key === "Enter" && isPasswordLengthEnough() && !isFocusOnButton)
+        onSubmit(value);
     },
-    [value]
+    [value, isFocusOnButton]
   );
 
   useEffect(() => {
@@ -45,6 +47,8 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
         title="実行"
         type="primary"
         disabled={!isPasswordLengthEnough()}
+        onFocus={() => setIsFocusOnButton(true)}
+        onBlur={() => setIsFocusOnButton(false)}
       />
     </Wrapper>
   );

@@ -10,6 +10,8 @@ type Props = {
   type?: ButtonType;
   width?: number;
   disabled?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 };
 
 export const Button: VFC<Props> = ({
@@ -18,6 +20,8 @@ export const Button: VFC<Props> = ({
   width = 80,
   type = "primary",
   disabled = false,
+  onFocus = () => {},
+  onBlur = () => {},
 }) => {
   return (
     <Wrapper
@@ -25,6 +29,8 @@ export const Button: VFC<Props> = ({
       width={width}
       className={type}
       disabled={disabled}
+      onFocus={onFocus}
+      onBlur={onBlur}
     >
       {title}
     </Wrapper>
