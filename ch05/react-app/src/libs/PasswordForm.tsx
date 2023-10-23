@@ -4,6 +4,8 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { fontSize, space } from "./constants";
 
+const PASSWORD_LENGTH = 8;
+
 type Props = {
   onSubmit: (password: string) => void;
 };
@@ -17,7 +19,7 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Enter") onSubmit(value);
+      if (e.key === "Enter" && value.length >= PASSWORD_LENGTH) onSubmit(value);
     },
     [value]
   );
@@ -34,9 +36,14 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
         id="password"
         type="password"
         onChange={(e) => handleChange(e)}
-        error={value.length < 8}
+        error={value.length < PASSWORD_LENGTH}
       />
-      <Button onClick={() => onSubmit(value)} title="実行" type="primary" />
+      <Button
+        onClick={() => onSubmit(value)}
+        title="実行"
+        type="primary"
+        disabled={value.length < PASSWORD_LENGTH}
+      />
     </Wrapper>
   );
 };
